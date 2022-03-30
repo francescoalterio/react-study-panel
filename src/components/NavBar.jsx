@@ -10,6 +10,7 @@ const NavBar = () => {
       <div className=" w-full flex flex-col items-end">
         <NavButton content="Home" to="/" />
         <NavButton content="Technologies" to="/technologies" />
+        <NavButton content="Dominated" to="/dominated" />
       </div>
     </nav>
   );

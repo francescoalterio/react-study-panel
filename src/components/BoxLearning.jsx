@@ -49,7 +49,7 @@ const BoxLearning = ({ setData }) => {
   };
 
   return (
-    <div className="w-11/12 bg-zinc-300 shadow-md rounded-xl flex items-center flex-col">
+    <div className="w-11/12 bg-zinc-700 shadow-md rounded-xl flex items-center flex-col">
       <h2 className=" bg-purple-600 text-white text-4xl px-5 py-2 rounded-full font-bold mt-5">
         Learning
       </h2>
@@ -80,7 +80,9 @@ const BoxLearning = ({ setData }) => {
             />
           ))
         ) : (
-          <h3>You are not learning any technology</h3>
+          <h3 className=" text-2xl font-bold mb-5">
+            You are not learning any technology
+          </h3>
         )}
       </div>
     </div>
