@@ -17,8 +17,8 @@ const Dominated = () => {
   };
 
   return (
-    <div className="w-full h-screen ">
-      <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 overflow-auto">
+    <div className="w-full h-screen pb-20">
+      <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 lg:pb-0s overflow-auto">
         {dominated.map(({ technology, createdBy, img, id }) => (
           <Technology
             technology={technology}

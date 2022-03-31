@@ -20,13 +20,15 @@ code {
     monospace;
 }
 
+a { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
 @layer components {
   .nav-link {
-    @apply w-11/12 h-10 text-white block pl-5 font-semibold flex items-center hover:bg-zinc-700 hover:rounded-tl-2xl hover:rounded-bl-2xl mb-1;
+    @apply lg:w-11/12 lg:h-10 w-16 h-5/6 text-white lg:pl-5 font-semibold flex justify-center lg:justify-start items-center hover:bg-zinc-700 lg:hover:rounded-tl-2xl lg:hover:rounded-bl-2xl mb-1 mx-2 sm:mx-2 md:mx-5 lg:mx-0;
   }
 
   .nav-link-active {
-    @apply bg-gradient-to-r from-purple-600 to-purple-700 rounded-tl-2xl rounded-bl-2xl;
+    @apply bg-gradient-to-r from-purple-600 to-purple-700 rounded-bl-2xl rounded-br-2xl lg:rounded-br-none lg:rounded-tl-2xl lg:rounded-bl-2xl;
   }
 
   .btn-primary {
@@ -50,6 +52,6 @@ code {
   }
 
   .inputAdd {
-    @apply w-11/12 h-10 px-4 py-2 text-gray-700 border-2 border-gray-700 bg-white rounded-full focus:outline-none focus:bg-white focus:border-purple-500 focus:border-4;
+    @apply w-11/12 h-10 px-4 py-2 text-gray-700 border-2 border-gray-700 bg-white rounded-full focus:outline-none focus:bg-white focus:border-purple-500 focus:border-4 my-2 lg:my-0;
   }
 }

@@ -72,7 +72,7 @@ const Technologies = () => {
   return (
     <div className="w-full h-screen ">
       <SearchBar value={searchInput} setValue={setSearchInput} />
-      <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 overflow-auto">
+      <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-40 lg:pb-20 overflow-auto">
         {technologies
           .filter((tech) => {
             const lowerCaseTech = tech.technology.toLowerCase();
@@ -91,7 +91,7 @@ const Technologies = () => {
                 onClick: () => handleDominated(technology, createdBy, img, id),
               }}
               btn2={{
-                content: "Learning",
+                content: "Learn",
                 theme: "btn-secondary",
                 onClick: () => handleLearn(technology, createdBy, img, id),
               }}

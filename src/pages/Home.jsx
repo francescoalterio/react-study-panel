@@ -19,8 +19,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen overflow-auto">
-      <InfoHome data={data} />
+    <div className="w-full h-screen overflow-auto pb-20">
+      <div className="w-full flex justify-center">
+        <InfoHome data={data} />
+      </div>
       <div className="flex justify-center ">
         <BoxLearning setData={setData} />
       </div>
