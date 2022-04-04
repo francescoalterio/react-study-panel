@@ -38,10 +38,10 @@ const AddTechnology = () => {
   };
 
   return (
-    <div className=" w-full h-full flex flex-col pt-5 lg:pt-0 lg:flex-row lg:justify-evenly items-center bg-zinc-100 pb-40 overflow-y-auto">
+    <div className=" w-full h-screen flex flex-col pt-5 lg:pt-0 lg:flex-row lg:justify-evenly lg:items-center items-center bg-zinc-100 dark:bg-zinc-900 lg:pb-0 overflow-y-auto">
       <form
         onSubmit={handleSubmit}
-        className=" w-80 lg:w-96 lg:h-96 rounded-2xl flex flex-col justify-start lg:justify-evenly items-center shadow-2xl bg-white mb-5 lg:mb-10 py-2"
+        className=" w-80 lg:w-96 lg:h-96 rounded-2xl flex flex-col justify-start lg:justify-evenly items-center shadow-2xl bg-white dark:bg-zinc-800 mb-5 lg:mb-10 py-2"
       >
         <input
           type="text"

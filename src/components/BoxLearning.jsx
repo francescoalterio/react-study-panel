@@ -80,7 +80,7 @@ const BoxLearning = ({ setData }) => {
             />
           ))
         ) : (
-          <h3 className=" text-2xl font-bold mb-5 text-white">
+          <h3 className=" text-2xl text-center font-bold mb-5 text-white">
             You are not learning any technology
           </h3>
         )}

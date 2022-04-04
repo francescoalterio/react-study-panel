@@ -11,7 +11,7 @@ function App() {
   conexionLocalStorage("core", db);
 
   return (
-    <div className="flex overflow-y-hidden flex-col lg:flex-row">
+    <div className="flex overflow-y-hidden flex-col lg:flex-row dark:bg-zinc-900">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
