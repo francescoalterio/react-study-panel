@@ -1,72 +1,80 @@
-import React, { useEffect, useState } from "react";
+import { getFirestore } from "../utils/getFirestore";
+import React, { useEffect, useState, useContext } from "react";
 import SearchBar from "../components/SearchBar";
 import Technology from "../components/Technology";
-import { conexionLocalStorage } from "../utils/conexionLocalStorage";
+import { UserContext } from "../context/UserContext";
+import { setDataUser } from "../utils/setDataUser";
+import { getDocument } from "../utils/getDocument";
+import { useNavigate } from "react-router-dom";
 
 const Technologies = () => {
   const [searchInput, setSearchInput] = useState("");
   const [technologies, setTechnologies] = useState([]);
-  const [learning, setLearning] = useState([]);
-  const [dominated, setDominated] = useState([]);
+
+  const [user, handleUser] = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const createdForUser = localStorage.getItem("createdForUser");
-
-    if (createdForUser) {
-      setTechnologies([
-        ...conexionLocalStorage("core"),
-        ...conexionLocalStorage("createdForUser"),
-      ]);
-    } else {
-      setTechnologies(conexionLocalStorage("core"));
-    }
-  }, []);
-
-  useEffect(() => {
-    const learningTechnologies = conexionLocalStorage("learning");
-    learningTechnologies && setLearning(learningTechnologies);
-    const dominatedTechnologies = conexionLocalStorage("dominated");
-    dominatedTechnologies && setDominated(dominatedTechnologies);
-  }, []);
+    getFirestore("Core").then((result) => {
+      setTechnologies([...result, ...user.created]);
+    });
+  }, [user]);
 
   const handleLearn = (technology, createdBy, img, id) => {
-    const learningLocal = conexionLocalStorage("learning");
-
-    const techToLearn = {
-      technology,
-      createdBy,
-      img,
-      id,
-    };
-
-    if (learningLocal) {
-      const newLearningArray = [...learning, techToLearn];
-      conexionLocalStorage("learning", newLearningArray);
+    if (!user.email) {
+      navigate("/login");
     } else {
-      conexionLocalStorage("learning", [techToLearn]);
+      const techToLearn = {
+        technology,
+        createdBy,
+        img,
+        id,
+      };
+      const newLearningArray = [...user.learning, techToLearn];
+      setDataUser(user.email, {
+        learning: newLearningArray,
+        dominated: user.dominated,
+        created: user.created,
+      });
+      getDocument("users", user.email).then((data) => {
+        handleUser({
+          email: user.email,
+          learning: data.learning,
+          dominated: data.dominated,
+          created: data.created,
+        });
+      });
     }
-
-    setLearning([...learning, techToLearn]);
   };
 
   const handleDominated = (technology, createdBy, img, id) => {
-    const dominatedLocal = conexionLocalStorage("dominated");
-
-    const techToDominated = {
-      technology,
-      createdBy,
-      img,
-      id,
-    };
-
-    if (dominatedLocal) {
-      const newDominatedArray = [...dominated, techToDominated];
-      conexionLocalStorage("dominated", newDominatedArray);
+    if (!user.email) {
+      navigate("/login");
     } else {
-      conexionLocalStorage("dominated", [techToDominated]);
-    }
+      const techToDominated = {
+        technology,
+        createdBy,
+        img,
+        id,
+      };
 
-    setDominated([...dominated, techToDominated]);
+      const newDominatedArray = [...user.dominated, techToDominated];
+
+      setDataUser(user.email, {
+        learning: user.learning,
+        dominated: newDominatedArray,
+        created: user.created,
+      });
+      getDocument("users", user.email).then((data) => {
+        handleUser({
+          email: user.email,
+          learning: data.learning,
+          dominated: data.dominated,
+          created: data.created,
+        });
+      });
+    }
   };
 
   return (
@@ -96,9 +104,9 @@ const Technologies = () => {
                 onClick: () => handleLearn(technology, createdBy, img, id),
               }}
               status={
-                learning.find((tech) => tech.id === id)
+                user.learning.find((tech) => tech.id === id)
                   ? "learning"
-                  : dominated.find((tech) => tech.id === id)
+                  : user.dominated.find((tech) => tech.id === id)
                   ? "dominated"
                   : ""
               }

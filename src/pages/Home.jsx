@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BoxLearning from "../components/BoxLearning";
 import InfoHome from "../components/InfoHome";
-import { conexionLocalStorage } from "../utils/conexionLocalStorage";
+import { UserContext } from "../context/UserContext";
+import { useLogged } from "../hooks/useLogged";
 
 const Home = () => {
+  const [user, handleUser] = useContext(UserContext);
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const learning = conexionLocalStorage("learning");
-    const createdForUser = conexionLocalStorage("createdForUser");
-    const dominated = conexionLocalStorage("dominated");
+  useLogged();
 
+  useEffect(() => {
     setData({
-      learning: learning ? learning.length : 0,
-      createdForUser: createdForUser ? createdForUser.length : 0,
-      dominated: dominated ? dominated.length : 0,
+      learning: user.learning ? user.learning.length : 0,
+      createdForUser: user.created ? user.created.length : 0,
+      dominated: user.dominated ? user.dominated.length : 0,
     });
-  }, []);
+  }, [user]);
 
   return (
     <div className="w-full h-screen overflow-auto pb-20">

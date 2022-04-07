@@ -1,37 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { conexionLocalStorage } from "../utils/conexionLocalStorage";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import { getDocument } from "../utils/getDocument";
+import { setDataUser } from "../utils/setDataUser";
 import Technology from "./Technology";
 
 const BoxLearning = ({ setData }) => {
-  const [learning, setLearning] = useState([]);
-
-  useEffect(() => {
-    const learningTechnologies = conexionLocalStorage("learning");
-    learningTechnologies && setLearning(learningTechnologies);
-  }, []);
+  const [user, handleUser] = useContext(UserContext);
 
   const setInfo = () => {
-    const learningData = conexionLocalStorage("learning");
-    const createdForUserData = conexionLocalStorage("createdForUser");
-    const dominatedData = conexionLocalStorage("dominated");
-
     setData({
-      learning: learningData ? learningData.length : 0,
-      createdForUser: createdForUserData ? createdForUserData.length : 0,
-      dominated: dominatedData ? dominatedData.length : 0,
+      learning: user.learning ? user.learning.length : 0,
+      createdForUser: user.created ? user.created.length : 0,
+      dominated: user.dominated ? user.dominated.length : 0,
     });
   };
 
   const handleDelete = (id) => {
-    const techEliminated = learning.filter((tech) => tech.id !== id);
-    conexionLocalStorage("learning", techEliminated);
-    setLearning(techEliminated);
+    const techEliminated = user.learning.filter((tech) => tech.id !== id);
+    setDataUser(user.email, {
+      learning: techEliminated,
+      dominated: user.dominated,
+      created: user.created,
+    });
+    getDocument("users", user.email).then((data) => {
+      handleUser({
+        email: user.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
     setInfo();
   };
 
   const handleDominated = (technology, createdBy, img, id) => {
-    const dominated = conexionLocalStorage("dominated");
-
     const techToDominated = {
       technology,
       createdBy,
@@ -39,12 +42,21 @@ const BoxLearning = ({ setData }) => {
       id,
     };
 
-    if (dominated) {
-      const newDominatedArray = [...dominated, techToDominated];
-      conexionLocalStorage("dominated", newDominatedArray);
-    } else {
-      conexionLocalStorage("dominated", [techToDominated]);
-    }
+    const newDominatedArray = [...user.dominated, techToDominated];
+    setDataUser(user.email, {
+      learning: user.learning,
+      dominated: newDominatedArray,
+      created: user.created,
+    });
+    getDocument("users", user.email).then((data) => {
+      handleUser({
+        email: user.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
+
     handleDelete(id);
   };
 
@@ -54,8 +66,8 @@ const BoxLearning = ({ setData }) => {
         Learning
       </h2>
       <div className=" w-full flex flex-wrap items-center justify-evenly mt-5 overflow-auto">
-        {learning.length > 0 ? (
-          learning.map((tech) => (
+        {user.learning.length > 0 ? (
+          user.learning.map((tech) => (
             <Technology
               technology={tech.technology}
               createdBy={tech.createdBy}
@@ -79,6 +91,18 @@ const BoxLearning = ({ setData }) => {
               }}
             />
           ))
+        ) : !user.email ? (
+          <div className="w-full flex flex-col justify-center items-center pb-5">
+            <h3 className=" text-2xl text-center font-bold mb-5 text-white">
+              You need to log in to use the panel
+            </h3>
+            <Link
+              to="/login"
+              className="btn-primary flex justify-center items-center text-lg"
+            >
+              Login
+            </Link>
+          </div>
         ) : (
           <h3 className=" text-2xl text-center font-bold mb-5 text-white">
             You are not learning any technology

@@ -1,25 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Technology from "../components/Technology";
-import { conexionLocalStorage } from "../utils/conexionLocalStorage";
+import { UserContext } from "../context/UserContext";
+import { getDocument } from "../utils/getDocument";
+import { setDataUser } from "../utils/setDataUser";
 
 const Dominated = () => {
-  const [dominated, setDominated] = useState([]);
-
-  useEffect(() => {
-    const dominatedLocal = conexionLocalStorage("dominated");
-    dominatedLocal && setDominated(dominatedLocal);
-  }, []);
+  const [user, handleUser] = useContext(UserContext);
 
   const handleDelete = (id) => {
-    const newDominated = dominated.filter((item) => item.id !== id);
-    setDominated(newDominated);
-    conexionLocalStorage("dominated", newDominated);
+    const newDominated = user.dominated.filter((item) => item.id !== id);
+    setDataUser(user.email, {
+      learning: user.learning,
+      dominated: newDominated,
+      created: user.created,
+    });
+    getDocument("users", user.email).then((data) => {
+      handleUser({
+        email: user.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
   };
 
   return (
     <div className="w-full h-screen pb-20">
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 lg:pb-0s overflow-auto">
-        {dominated.map(({ technology, createdBy, img, id }) => (
+        {user.dominated.map(({ technology, createdBy, img, id }) => (
           <Technology
             technology={technology}
             createdBy={createdBy}

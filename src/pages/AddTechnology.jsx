@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Technology from "../components/Technology";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { conexionLocalStorage } from "../utils/conexionLocalStorage";
+import { UserContext } from "../context/UserContext";
+import { getDocument } from "../utils/getDocument";
+import { setDataUser } from "../utils/setDataUser";
 
 const AddTechnology = () => {
   const [technology, setTechnology] = useState("");
   const [createdBy, setCreatedBy] = useState("");
   const [img, setImg] = useState("");
+
+  const [user, handleUser] = useContext(UserContext);
 
   console.log(technology, createdBy, img);
 
@@ -15,7 +20,6 @@ const AddTechnology = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const myCreations = conexionLocalStorage("createdForUser");
     const newCreated = {
       technology,
       createdBy,
@@ -23,12 +27,21 @@ const AddTechnology = () => {
       id: Date.now(),
     };
 
-    if (myCreations) {
-      const newCreatedForUser = [...myCreations, newCreated];
-      conexionLocalStorage("createdForUser", newCreatedForUser);
-    } else {
-      conexionLocalStorage("createdForUser", [newCreated]);
-    }
+    const newCreatedForUser = [...user.created, newCreated];
+
+    setDataUser(user.email, {
+      learning: user.learning,
+      dominated: user.dominated,
+      created: newCreatedForUser,
+    });
+    getDocument("users", user.email).then((data) => {
+      handleUser({
+        email: user.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
 
     navigate("/technologies");
   };
