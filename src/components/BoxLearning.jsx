@@ -42,9 +42,11 @@ const BoxLearning = ({ setData }) => {
       id,
     };
 
+    const techEliminated = user.learning.filter((tech) => tech.id !== id);
+
     const newDominatedArray = [...user.dominated, techToDominated];
     setDataUser(user.email, {
-      learning: user.learning,
+      learning: techEliminated,
       dominated: newDominatedArray,
       created: user.created,
     });
@@ -55,9 +57,8 @@ const BoxLearning = ({ setData }) => {
         dominated: data.dominated,
         created: data.created,
       });
+      setInfo();
     });
-
-    handleDelete(id);
   };
 
   return (
@@ -69,6 +70,7 @@ const BoxLearning = ({ setData }) => {
         {user.learning.length > 0 ? (
           user.learning.map((tech) => (
             <Technology
+              key={tech.id}
               technology={tech.technology}
               createdBy={tech.createdBy}
               img={tech.img}

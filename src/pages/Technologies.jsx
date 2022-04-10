@@ -89,6 +89,7 @@ const Technologies = () => {
           })
           .map(({ technology, createdBy, img, id }) => (
             <Technology
+              key={id}
               technology={technology}
               createdBy={createdBy}
               img={img}
