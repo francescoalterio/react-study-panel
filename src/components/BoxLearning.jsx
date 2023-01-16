@@ -64,7 +64,7 @@ const BoxLearning = ({ setData }) => {
   return (
     <div className="w-11/12 bg-zinc-700 shadow-md rounded-xl flex items-center flex-col">
       <h2 className=" bg-purple-600 text-white text-4xl px-5 py-2 rounded-full font-bold mt-5">
-        Learning
+        Learning {process.env.REACT_APP_ERWE}
       </h2>
       <div className=" w-full flex flex-wrap items-center justify-evenly mt-5 overflow-auto">
         {user.learning.length > 0 ? (
