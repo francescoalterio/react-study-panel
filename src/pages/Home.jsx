@@ -5,7 +5,7 @@ import { UserContext } from "../context/UserContext";
 import { useLogged } from "../hooks/useLogged";
 
 const Home = () => {
-  const [user, handleUser] = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   useLogged();
 
