@@ -5,16 +5,8 @@ import { getDocument } from "../utils/getDocument";
 import { setDataUser } from "../utils/setDataUser";
 import Technology from "./Technology";
 
-const BoxLearning = ({ setData }) => {
+const BoxLearning = () => {
   const [user, handleUser] = useContext(UserContext);
-
-  const setInfo = () => {
-    setData({
-      learning: user.learning ? user.learning.length : 0,
-      createdForUser: user.created ? user.created.length : 0,
-      dominated: user.dominated ? user.dominated.length : 0,
-    });
-  };
 
   const handleDelete = (id) => {
     const techEliminated = user.learning.filter((tech) => tech.id !== id);
@@ -31,7 +23,6 @@ const BoxLearning = ({ setData }) => {
         created: data.created,
       });
     });
-    setInfo();
   };
 
   const handleDominated = (technology, createdBy, img, id) => {
@@ -57,7 +48,6 @@ const BoxLearning = ({ setData }) => {
         dominated: data.dominated,
         created: data.created,
       });
-      setInfo();
     });
   };
 
