@@ -1,4 +1,4 @@
-export const conexionLocalStorage = (key, value = undefined) => {
+export const conexionLocalStorage = (key, value) => {
   if (value) {
     localStorage.setItem(key, JSON.stringify(value));
   } else {

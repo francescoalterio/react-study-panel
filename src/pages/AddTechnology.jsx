@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import Technology from "../components/Technology";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
-import { conexionLocalStorage } from "../utils/conexionLocalStorage";
 import { UserContext } from "../context/UserContext";
 import { getDocument } from "../utils/getDocument";
 import { setDataUser } from "../utils/setDataUser";

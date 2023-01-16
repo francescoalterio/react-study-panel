@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { conexionLocalStorage } from "../utils/conexionLocalStorage";
 
 export const useTheme = () => {
