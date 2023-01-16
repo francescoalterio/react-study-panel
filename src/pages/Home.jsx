@@ -5,14 +5,14 @@ import { UserContext } from "../context/UserContext";
 import { useLogged } from "../hooks/useLogged";
 
 const Home = () => {
-  const [user] = useContext(UserContext);
+  const [userData] = useContext(UserContext);
 
   useLogged();
 
   const data = {
-    learning: user.learning.length,
-    createdForUser: user.created.length,
-    dominated: user.dominated.length,
+    learning: userData.learning.length,
+    createdForUser: userData.created.length,
+    dominated: userData.dominated.length,
   };
 
   return (

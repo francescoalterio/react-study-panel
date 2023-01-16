@@ -1,93 +1,26 @@
-import { getFirestore } from "../utils/getFirestore";
-import React, { useEffect, useState, useContext } from "react";
 import SearchBar from "../components/SearchBar";
 import Technology from "../components/Technology";
-import { UserContext } from "../context/UserContext";
-import { setDataUser } from "../utils/setDataUser";
-import { getDocument } from "../utils/getDocument";
-import { useNavigate } from "react-router-dom";
+import { useTechnology } from "../hooks/useTechnology";
+import { useTextInput } from "../hooks/useTextInput";
+import { filterTechnologiesBySearch } from "../utils/filterTechnologiesBySearch";
 
 const Technologies = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [technologies, setTechnologies] = useState([]);
+  const { userData, technologies, handleLearn, handleDominated } =
+    useTechnology();
 
-  const [user, handleUser] = useContext(UserContext);
+  const { searchInputText, onChangeInput } = useTextInput();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    getFirestore("Core").then((result) => {
-      setTechnologies([...result, ...user.created]);
-    });
-  }, [user]);
-
-  const handleLearn = (technology, createdBy, img, id) => {
-    if (!user.email) {
-      navigate("/login");
-    } else {
-      const techToLearn = {
-        technology,
-        createdBy,
-        img,
-        id,
-      };
-      const newLearningArray = [...user.learning, techToLearn];
-      setDataUser(user.email, {
-        learning: newLearningArray,
-        dominated: user.dominated,
-        created: user.created,
-      });
-      getDocument("users", user.email).then((data) => {
-        handleUser({
-          email: user.email,
-          learning: data.learning,
-          dominated: data.dominated,
-          created: data.created,
-        });
-      });
-    }
-  };
-
-  const handleDominated = (technology, createdBy, img, id) => {
-    if (!user.email) {
-      navigate("/login");
-    } else {
-      const techToDominated = {
-        technology,
-        createdBy,
-        img,
-        id,
-      };
-
-      const newDominatedArray = [...user.dominated, techToDominated];
-
-      setDataUser(user.email, {
-        learning: user.learning,
-        dominated: newDominatedArray,
-        created: user.created,
-      });
-      getDocument("users", user.email).then((data) => {
-        handleUser({
-          email: user.email,
-          learning: data.learning,
-          dominated: data.dominated,
-          created: data.created,
-        });
-      });
-    }
-  };
+  const technologiesFilteredBySearch = filterTechnologiesBySearch(
+    technologies,
+    searchInputText
+  );
 
   return (
     <div className="w-full h-screen ">
-      <SearchBar value={searchInput} setValue={setSearchInput} />
+      <SearchBar value={searchInputText} onChange={onChangeInput} />
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-40 lg:pb-20 overflow-auto">
-        {technologies
-          .filter((tech) => {
-            const lowerCaseTech = tech.technology.toLowerCase();
-            const lowerCaseSearchInput = searchInput.toLowerCase();
-            return lowerCaseTech.includes(lowerCaseSearchInput);
-          })
-          .map(({ technology, createdBy, img, id }) => (
+        {technologiesFilteredBySearch.map(
+          ({ technology, createdBy, img, id }) => (
             <Technology
               key={id}
               technology={technology}
@@ -105,14 +38,15 @@ const Technologies = () => {
                 onClick: () => handleLearn(technology, createdBy, img, id),
               }}
               status={
-                user.learning.find((tech) => tech.id === id)
+                userData.learning.find((tech) => tech.id === id)
                   ? "learning"
-                  : user.dominated.find((tech) => tech.id === id)
+                  : userData.dominated.find((tech) => tech.id === id)
                   ? "dominated"
                   : ""
               }
             />
-          ))}
+          )
+        )}
       </div>
     </div>
   );

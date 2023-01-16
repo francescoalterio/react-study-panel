@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SearchBar = ({ value, setValue }) => {
+const SearchBar = ({ value, onChange }) => {
   return (
     <nav className="w-full h-20 bg-zinc-800 flex items-center justify-between lg:justify-end px-3 lg:px-10">
       <Link
@@ -13,7 +13,7 @@ const SearchBar = ({ value, setValue }) => {
       <input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={onChange}
         className="rounded-full h-10 w-44 lg:w-72 px-5"
         placeholder="Search"
       />
