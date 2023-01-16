@@ -10,9 +10,9 @@ const Home = () => {
   useLogged();
 
   const data = {
-    learning: user.learning ? user.learning.length : 0,
-    createdForUser: user.created ? user.created.length : 0,
-    dominated: user.dominated ? user.dominated.length : 0,
+    learning: user.learning.length,
+    createdForUser: user.created.length,
+    dominated: user.dominated.length,
   };
 
   return (
