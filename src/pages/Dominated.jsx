@@ -1,33 +1,13 @@
-import React, { useContext } from "react";
 import { TechnologyCard } from "../components/TechnologyCard";
-import { UserContext } from "../context/UserContext";
-import { getDocument } from "../utils/getDocument";
-import { setDataUser } from "../utils/setDataUser";
+import { useTechnology } from "../hooks/useTechnology";
 
 const Dominated = () => {
-  const [user, handleUser] = useContext(UserContext);
-
-  const handleDelete = (id) => {
-    const newDominated = user.dominated.filter((item) => item.id !== id);
-    setDataUser(user.email, {
-      learning: user.learning,
-      dominated: newDominated,
-      created: user.created,
-    });
-    getDocument("users", user.email).then((data) => {
-      handleUser({
-        email: user.email,
-        learning: data.learning,
-        dominated: data.dominated,
-        created: data.created,
-      });
-    });
-  };
+  const { userData, handleDelete } = useTechnology();
 
   return (
     <div className="w-full h-screen pb-20">
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 lg:pb-0s overflow-auto">
-        {user.dominated.map(({ technology, createdBy, img, id }) => (
+        {userData.dominated.map(({ technology, createdBy, img, id }) => (
           <TechnologyCard
             technology={technology}
             createdBy={createdBy}

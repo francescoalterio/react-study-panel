@@ -102,11 +102,28 @@ export function useTechnology() {
     navigate("/technologies");
   };
 
+  const handleDelete = (id) => {
+    const newDominated = userData.dominated.filter((item) => item.id !== id);
+    setDataUser(userData.email, {
+      learning: userData.learning,
+      dominated: newDominated,
+      created: userData.created,
+    });
+    getDocument("users", userData.email).then((data) => {
+      handleUserData({
+        email: userData.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
+  };
   return {
     userData,
     technologies,
     handleLearn,
     handleDominated,
     handleAddTechnology,
+    handleDelete,
   };
 }
