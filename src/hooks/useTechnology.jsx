@@ -74,10 +74,39 @@ export function useTechnology() {
     }
   };
 
+  const handleAddTechnology = (e, technology, createdBy, img) => {
+    e.preventDefault();
+    const newCreated = {
+      technology,
+      createdBy,
+      img,
+      id: Date.now(),
+    };
+
+    const newCreatedForUser = [...userData.created, newCreated];
+
+    setDataUser(userData.email, {
+      learning: userData.learning,
+      dominated: userData.dominated,
+      created: newCreatedForUser,
+    });
+    getDocument("users", userData.email).then((data) => {
+      handleUserData({
+        email: userData.email,
+        learning: data.learning,
+        dominated: data.dominated,
+        created: data.created,
+      });
+    });
+
+    navigate("/technologies");
+  };
+
   return {
     userData,
     technologies,
     handleLearn,
     handleDominated,
+    handleAddTechnology,
   };
 }

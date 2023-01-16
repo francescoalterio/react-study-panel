@@ -8,7 +8,7 @@ const Technologies = () => {
   const { userData, technologies, handleLearn, handleDominated } =
     useTechnology();
 
-  const { searchInputText, onChangeInput } = useTextInput();
+  const [searchInputText, onChangeInput] = useTextInput();
 
   const technologiesFilteredBySearch = filterTechnologiesBySearch(
     technologies,

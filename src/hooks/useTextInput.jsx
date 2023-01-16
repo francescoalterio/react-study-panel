@@ -5,5 +5,5 @@ export function useTextInput() {
 
   const onChangeInput = (e) => setSearchInputText(e.target.value);
 
-  return { searchInputText, onChangeInput };
+  return [searchInputText, onChangeInput];
 }
