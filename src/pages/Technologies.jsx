@@ -1,5 +1,5 @@
 import SearchBar from "../components/SearchBar";
-import Technology from "../components/Technology";
+import { TechnologyCard } from "../components/TechnologyCard";
 import { useTechnology } from "../hooks/useTechnology";
 import { useTextInput } from "../hooks/useTextInput";
 import { filterTechnologiesBySearch } from "../utils/filterTechnologiesBySearch";
@@ -21,7 +21,7 @@ const Technologies = () => {
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-40 lg:pb-20 overflow-auto">
         {technologiesFilteredBySearch.map(
           ({ technology, createdBy, img, id }) => (
-            <Technology
+            <TechnologyCard
               key={id}
               technology={technology}
               createdBy={createdBy}

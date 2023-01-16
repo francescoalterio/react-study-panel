@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { getDocument } from "../utils/getDocument";
 import { setDataUser } from "../utils/setDataUser";
-import Technology from "./Technology";
+import { TechnologyCard } from "./TechnologyCard";
 
 const BoxLearning = () => {
   const [user, handleUser] = useContext(UserContext);
@@ -59,7 +59,7 @@ const BoxLearning = () => {
       <div className=" w-full flex flex-wrap items-center justify-evenly mt-5 overflow-auto">
         {user.learning.length > 0 ? (
           user.learning.map((tech) => (
-            <Technology
+            <TechnologyCard
               key={tech.id}
               technology={tech.technology}
               createdBy={tech.createdBy}

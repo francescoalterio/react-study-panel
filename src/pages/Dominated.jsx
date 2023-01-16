@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Technology from "../components/Technology";
+import { TechnologyCard } from "../components/TechnologyCard";
 import { UserContext } from "../context/UserContext";
 import { getDocument } from "../utils/getDocument";
 import { setDataUser } from "../utils/setDataUser";
@@ -28,7 +28,7 @@ const Dominated = () => {
     <div className="w-full h-screen pb-20">
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 lg:pb-0s overflow-auto">
         {user.dominated.map(({ technology, createdBy, img, id }) => (
-          <Technology
+          <TechnologyCard
             technology={technology}
             createdBy={createdBy}
             img={img}

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import Technology from "../components/Technology";
+import { TechnologyCard } from "../components/TechnologyCard";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -81,7 +81,7 @@ const AddTechnology = () => {
           <Button onClick={cancel} content="Cancel" theme="btn-alternative" />
         </div>
       </form>
-      <Technology
+      <TechnologyCard
         technology={technology}
         createdBy={createdBy}
         img={img}
