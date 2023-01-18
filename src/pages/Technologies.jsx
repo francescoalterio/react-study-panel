@@ -5,7 +5,7 @@ import { useTextInput } from "../hooks/useTextInput";
 import { filterTechnologiesBySearch } from "../utils/filterTechnologiesBySearch";
 
 const Technologies = () => {
-  const { userData, technologies, handleLearn, handleDominated } =
+  const { userData, technologies, learningHandler, dominatedHandler } =
     useTechnology();
 
   const [searchInputText, onChangeInput] = useTextInput();
@@ -30,12 +30,14 @@ const Technologies = () => {
               btn1={{
                 content: "Dominated",
                 theme: "btn-primary",
-                onClick: () => handleDominated(technology, createdBy, img, id),
+                onClick: () =>
+                  dominatedHandler({ technology, createdBy, img, id }),
               }}
               btn2={{
                 content: "Learn",
                 theme: "btn-secondary",
-                onClick: () => handleLearn(technology, createdBy, img, id),
+                onClick: () =>
+                  learningHandler({ technology, createdBy, img, id }),
               }}
               status={
                 userData.learning.find((tech) => tech.id === id)

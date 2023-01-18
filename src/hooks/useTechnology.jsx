@@ -18,112 +18,54 @@ export function useTechnology() {
     });
   }, [userData]);
 
-  const handleLearn = (technology, createdBy, img, id) => {
-    if (!userData.email) {
-      navigate("/login");
-    } else {
-      const techToLearn = {
-        technology,
-        createdBy,
-        img,
-        id,
-      };
-      const newLearningArray = [...userData.learning, techToLearn];
-      setDataUser(userData.email, {
-        learning: newLearningArray,
-        dominated: userData.dominated,
-        created: userData.created,
-      });
-      getDocument("users", userData.email).then((data) => {
-        handleUserData({
-          email: userData.email,
-          learning: data.learning,
-          dominated: data.dominated,
-          created: data.created,
-        });
-      });
-    }
+  const setData = async (
+    property,
+    technologyData,
+    options = { deleteDominated: false }
+  ) => {
+    const newPropertyData = options.deleteDominated
+      ? userData[property].filter((item) => item.id !== technologyData.id)
+      : [...userData[property], technologyData];
+    const userDataCopy = { ...userData };
+    delete userDataCopy.email;
+    userDataCopy[property] = newPropertyData;
+    await setDataUser(userData.email, userDataCopy);
+    const data = await getDocument("users", userData.email);
+    console.log("DATA: ", data);
+    handleUserData({
+      email: userData.email,
+      learning: data.learning,
+      dominated: data.dominated,
+      created: data.created,
+    });
   };
 
-  const handleDominated = (technology, createdBy, img, id) => {
-    if (!userData.email) {
-      navigate("/login");
-    } else {
-      const techToDominated = {
-        technology,
-        createdBy,
-        img,
-        id,
-      };
-
-      const newDominatedArray = [...userData.dominated, techToDominated];
-
-      setDataUser(userData.email, {
-        learning: userData.learning,
-        dominated: newDominatedArray,
-        created: userData.created,
-      });
-      getDocument("users", userData.email).then((data) => {
-        handleUserData({
-          email: userData.email,
-          learning: data.learning,
-          dominated: data.dominated,
-          created: data.created,
-        });
-      });
-    }
+  const learningHandler = (technologyData) => {
+    if (!userData.email) navigate("/login");
+    else setData("learning", technologyData);
   };
 
-  const handleAddTechnology = (e, technology, createdBy, img) => {
+  const dominatedHandler = (technologyData) => {
+    if (!userData.email) navigate("/login");
+    else setData("dominated", technologyData);
+  };
+
+  const addTechnologyHandler = (e, technologyData) => {
     e.preventDefault();
-    const newCreated = {
-      technology,
-      createdBy,
-      img,
-      id: Date.now(),
-    };
-
-    const newCreatedForUser = [...userData.created, newCreated];
-
-    setDataUser(userData.email, {
-      learning: userData.learning,
-      dominated: userData.dominated,
-      created: newCreatedForUser,
-    });
-    getDocument("users", userData.email).then((data) => {
-      handleUserData({
-        email: userData.email,
-        learning: data.learning,
-        dominated: data.dominated,
-        created: data.created,
-      });
-    });
-
+    const addingID = { ...technologyData, id: Date.now() };
+    setData("created", addingID);
     navigate("/technologies");
   };
 
-  const handleDelete = (id) => {
-    const newDominated = userData.dominated.filter((item) => item.id !== id);
-    setDataUser(userData.email, {
-      learning: userData.learning,
-      dominated: newDominated,
-      created: userData.created,
-    });
-    getDocument("users", userData.email).then((data) => {
-      handleUserData({
-        email: userData.email,
-        learning: data.learning,
-        dominated: data.dominated,
-        created: data.created,
-      });
-    });
+  const deleteHandler = (property, id) => {
+    setData(property, { id }, { deleteDominated: true });
   };
   return {
     userData,
     technologies,
-    handleLearn,
-    handleDominated,
-    handleAddTechnology,
-    handleDelete,
+    learningHandler,
+    dominatedHandler,
+    addTechnologyHandler,
+    deleteHandler,
   };
 }

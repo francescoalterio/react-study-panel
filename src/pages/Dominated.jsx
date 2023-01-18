@@ -2,7 +2,7 @@ import { TechnologyCard } from "../components/TechnologyCard";
 import { useTechnology } from "../hooks/useTechnology";
 
 const Dominated = () => {
-  const { userData, handleDelete } = useTechnology();
+  const { userData, deleteHandler } = useTechnology();
 
   return (
     <div className="w-full h-screen pb-20">
@@ -16,7 +16,7 @@ const Dominated = () => {
             btn1={{
               content: "Delete",
               theme: "btn-alternative",
-              onClick: () => handleDelete(id),
+              onClick: () => deleteHandler("dominated", id),
             }}
             status="dominated-page"
           />

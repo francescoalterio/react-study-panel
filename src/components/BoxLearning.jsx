@@ -1,41 +1,21 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { useTechnology } from "../hooks/useTechnology";
 import { getDocument } from "../utils/getDocument";
 import { setDataUser } from "../utils/setDataUser";
 import { TechnologyCard } from "./TechnologyCard";
 
 const BoxLearning = () => {
   const [user, handleUser] = useContext(UserContext);
+  const { deleteHandler } = useTechnology();
 
-  const handleDelete = (id) => {
-    const techEliminated = user.learning.filter((tech) => tech.id !== id);
-    setDataUser(user.email, {
-      learning: techEliminated,
-      dominated: user.dominated,
-      created: user.created,
-    });
-    getDocument("users", user.email).then((data) => {
-      handleUser({
-        email: user.email,
-        learning: data.learning,
-        dominated: data.dominated,
-        created: data.created,
-      });
-    });
-  };
+  const masterTechnology = (technologyData) => {
+    const techEliminated = user.learning.filter(
+      (tech) => tech.id !== technologyData.id
+    );
 
-  const handleDominated = (technology, createdBy, img, id) => {
-    const techToDominated = {
-      technology,
-      createdBy,
-      img,
-      id,
-    };
-
-    const techEliminated = user.learning.filter((tech) => tech.id !== id);
-
-    const newDominatedArray = [...user.dominated, techToDominated];
+    const newDominatedArray = [...user.dominated, technologyData];
     setDataUser(user.email, {
       learning: techEliminated,
       dominated: newDominatedArray,
@@ -58,28 +38,23 @@ const BoxLearning = () => {
       </h2>
       <div className=" w-full flex flex-wrap items-center justify-evenly mt-5 overflow-auto">
         {user.learning.length > 0 ? (
-          user.learning.map((tech) => (
+          user.learning.map(({ id, technology, createdBy, img }) => (
             <TechnologyCard
-              key={tech.id}
-              technology={tech.technology}
-              createdBy={tech.createdBy}
-              img={tech.img}
-              id={tech.id}
+              key={id}
+              technology={technology}
+              createdBy={createdBy}
+              img={img}
+              id={id}
               btn1={{
                 content: "Dominated",
                 theme: "btn-primary",
                 onClick: () =>
-                  handleDominated(
-                    tech.technology,
-                    tech.createdBy,
-                    tech.img,
-                    tech.id
-                  ),
+                  masterTechnology({ technology, createdBy, img, id }),
               }}
               btn2={{
                 content: "Delete",
                 theme: "btn-alternative",
-                onClick: () => handleDelete(tech.id),
+                onClick: () => deleteHandler("learning", id),
               }}
             />
           ))
