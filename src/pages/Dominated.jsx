@@ -6,6 +6,9 @@ const Dominated = () => {
 
   return (
     <div className="w-full h-screen pb-20">
+      <div className="w-full h-20 bg-[#111317] flex items-center justify-between px-3 ">
+        <h1 className=" text-white text-2xl font-semibold">Dominated</h1>
+      </div>
       <div className="w-full h-screen flex flex-wrap justify-evenly pt-10 pb-20 lg:pb-0s overflow-auto">
         {userData.dominated.map(({ technology, createdBy, img, id }) => (
           <TechnologyCard

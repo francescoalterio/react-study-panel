@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
 import NavButton from "./NavButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHouse,
-  faSuitcase,
-  faAtom,
-  faMoon,
-  faSun,
-  faRightToBracket,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../hooks/useTheme";
 import { useNavigate } from "react-router-dom";
 import { UserContext, initialState } from "../context/UserContext";
 import { getAuth, signOut } from "firebase/auth";
+
+import {
+  IoBriefcaseOutline,
+  IoHomeOutline,
+  IoLogInOutline,
+  IoLogoReact,
+  IoLogOutOutline,
+  IoMoonOutline,
+  IoSunnyOutline,
+} from "react-icons/io5";
 
 const NavBar = () => {
   const [theme, handleTheme] = useTheme();
@@ -37,46 +37,30 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="lg:w-52 bg-zinc-800 lg:h-screen flex lg:flex-col w-full h-16 fixed bottom-0 lg:relative">
-      <header className="w-full h-28 lg:flex justify-center items-center border-b-purple-700 border-b-2 mb-5 hidden">
+    <nav className=" lg:w-60 bg-[#111317] lg:h-screen flex lg:flex-col w-full h-16 fixed bottom-0 lg:relative">
+      <header className="w-full h-28 lg:flex justify-center items-center mb-5 hidden">
         <h1 className="text-white text-2xl font-bold">Study Panel</h1>
       </header>
       <div className=" w-full lg:h-full flex lg:justify-between lg:flex-col lg:items-end">
-        <div className="w-full flex justify-center lg:flex-col lg:items-end">
-          <NavButton
-            content="Home"
-            to="/"
-            icon={<FontAwesomeIcon icon={faHouse} />}
-          />
+        <div className="w-full flex justify-center lg:flex-col lg:items-end gap-6">
+          <NavButton content="Home" to="/" icon={<IoHomeOutline />} />
           <NavButton
             content="Technologies"
             to="/technologies"
-            icon={<FontAwesomeIcon icon={faAtom} />}
+            icon={<IoLogoReact />}
           />
           <NavButton
             content="Dominated"
             to="/dominated"
-            icon={<FontAwesomeIcon icon={faSuitcase} />}
+            icon={<IoBriefcaseOutline />}
           />
         </div>
-        <div className=" fixed bottom-0 right-0 pl-10 m-5 lg:relative lg:flex lg:m-5"></div>
-        <button
-          onClick={handleLogin}
-          className=" fixed bottom-0 left-0 m-3 block rounded-md border-2 border-zinc-900 w-12 h-10 text-white"
-        >
-          {!user.email ? (
-            <FontAwesomeIcon icon={faRightToBracket} />
-          ) : (
-            <FontAwesomeIcon icon={faRightFromBracket} />
-          )}
-        </button>
-        <div className=" fixed bottom-0 right-0 m-4 lg:relative lg:flex lg:m-5">
-          <button className=" theme text-white text-xl " onClick={handleTheme}>
-            {theme === "light" ? (
-              <FontAwesomeIcon icon={faMoon} />
-            ) : (
-              <FontAwesomeIcon icon={faSun} />
-            )}
+        <div className=" w-full flex items-center justify-between p-5">
+          <button onClick={handleLogin} className=" text-xl text-white">
+            {!user.email ? <IoLogInOutline /> : <IoLogOutOutline />}
+          </button>
+          <button className=" text-white text-xl " onClick={handleTheme}>
+            {theme === "light" ? <IoMoonOutline /> : <IoSunnyOutline />}
           </button>
         </div>
       </div>

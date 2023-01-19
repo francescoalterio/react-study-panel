@@ -20,39 +20,43 @@ code {
     monospace;
 }
 
-a { -webkit-tap-highlight-color: rgba(0,0,0,0); }
-.theme { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.theme {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
 @layer components {
   .nav-link {
-    @apply lg:w-11/12 lg:h-10 w-16 h-5/6 text-white lg:pl-5 font-semibold flex justify-center lg:justify-start items-center hover:bg-zinc-700 lg:hover:rounded-tl-2xl lg:hover:rounded-bl-2xl mb-1 mx-2 sm:mx-2 md:mx-5 lg:mx-0;
+    @apply text-[#A9A9A9] w-4/5 flex flex-row justify-between;
   }
 
   .nav-link-active {
-    @apply bg-gradient-to-r from-purple-600 to-purple-700 rounded-bl-2xl rounded-br-2xl lg:rounded-br-none lg:rounded-tl-2xl lg:rounded-bl-2xl;
+    @apply text-[#1FCB4F] after:content-[''] after:w-2 after:bg-[#FFC01E] after:rounded-l-lg;
   }
 
   .btn-primary {
-    @apply h-9 px-4 text-white font-semibold bg-gradient-to-r from-blue-500 to-blue-600 rounded-md mx-2 hover:from-blue-600 hover:to-blue-700;
+    @apply h-9 px-4 text-white font-semibold bg-[#FFC01E] bg-opacity-70 rounded-md mx-2;
   }
 
   .btn-secondary {
-    @apply h-9 px-4 text-white font-semibold bg-gradient-to-r from-green-600 to-green-700 rounded-md mx-2 hover:from-green-700 hover:to-green-800;
+    @apply h-9 px-4 text-white font-semibold bg-[#1FCB4F] bg-opacity-70 rounded-md mx-2;
   }
 
   .btn-alternative {
-    @apply h-9 px-4 text-white font-semibold bg-gradient-to-r from-red-500 to-red-600 rounded-md mx-2 hover:from-red-700 hover:to-red-800;
+    @apply h-9 px-4 text-white font-semibold rounded-md mx-2 bg-red-600 bg-opacity-60;
   }
 
   .core {
-    @apply text-white bg-purple-600 rounded-full px-3 font-bold mt-2;
+    @apply text-white bg-[#1FCB4F] bg-opacity-80 rounded-full px-3 font-bold mt-2;
   }
 
   .added {
-    @apply text-white bg-gray-500 rounded-full px-3 font-bold mt-2;
+    @apply text-white bg-[#282C35] rounded-full px-3 font-bold mt-2;
   }
 
   .inputAdd {
-    @apply w-11/12 h-10 px-4 py-2 text-gray-700 border-2 border-gray-700 bg-white rounded-full focus:outline-none focus:bg-white focus:border-purple-500 focus:border-4 my-2 lg:my-0;
+    @apply w-11/12 h-10 px-4 py-2 text-gray-700 border-2 border-gray-700 bg-white rounded-full focus:outline-none focus:bg-white focus:border-[#1FCB4F] focus:border-4 my-2 lg:my-0;
   }
 }
