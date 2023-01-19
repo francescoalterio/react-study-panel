@@ -10,7 +10,7 @@ import {
 
 const InfoHome = ({ data }) => {
   return (
-    <div className="w-full flex my-8 gap-6 overflow-hidden">
+    <div className="w-full flex justify-evenly my-8 gap-6 overflow-hidden flex-col sm:flex-wrap sm:flex-row">
       <DataBox title="Learning" data={data.learning} icon={<IoBook />} />
       <DataBox title="Dominated" data={data.dominated} icon={<IoBriefcase />} />
       <DataBox

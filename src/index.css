@@ -29,11 +29,11 @@ a {
 
 @layer components {
   .nav-link {
-    @apply text-[#A9A9A9] w-4/5 flex flex-row justify-between;
+    @apply text-[#A9A9A9] lg:w-4/5 h-full flex flex-col lg:flex-row justify-end;
   }
 
   .nav-link-active {
-    @apply text-[#1FCB4F] after:content-[''] after:w-2 after:bg-[#FFC01E] after:rounded-l-lg;
+    @apply text-[#1FCB4F] justify-between before:content-[""] before:h-2 before:w-full lg:before:hidden before:bg-[#FFC01E] before:rounded-b-lg lg:after:content-[''] lg:after:w-2 lg:after:bg-[#FFC01E] lg:after:rounded-l-lg;
   }
 
   .btn-primary {

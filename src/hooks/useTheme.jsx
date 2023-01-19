@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { conexionLocalStorage } from "../utils/conexionLocalStorage";
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     const localTheme = conexionLocalStorage("theme");
     if (localTheme) {
       setTheme(localTheme);
     } else {
-      conexionLocalStorage("theme", "light");
+      conexionLocalStorage("theme", "dark");
     }
   }, []);
 

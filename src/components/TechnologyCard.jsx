@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import LearningOrDominated from "./LearningOrDominated";
+import { IoHelp } from "react-icons/io5";
 
 export const TechnologyCard = ({
   technology,
@@ -13,7 +14,11 @@ export const TechnologyCard = ({
 }) => {
   return (
     <div className=" w-64 h-80 bg-[#111317] rounded-md flex flex-col justify-evenly items-center  mb-10 mx-2 text-white">
-      <img src={img} alt="" className=" w-32 h-32" />
+      {img ? (
+        <img src={img} alt="" className=" w-32 h-32" />
+      ) : (
+        <IoHelp size={128} />
+      )}
       <div className=" w-full flex flex-col justify-center items-center">
         <h3 className=" font-bold text-2xl text-center">{technology}</h3>
         <h5 className={createdBy === "Core" ? "core" : "added"}>{createdBy}</h5>

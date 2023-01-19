@@ -37,12 +37,13 @@ const NavBar = () => {
   };
 
   return (
-    <nav className=" lg:w-60 bg-[#111317] lg:h-screen flex lg:flex-col w-full h-16 fixed bottom-0 lg:relative">
+    <nav className=" lg:w-60 bg-[#111317] lg:h-screen flex lg:flex-col w-full h-16 fixed bottom-0 lg:relative ">
       <header className="w-full h-28 lg:flex justify-center items-center mb-5 hidden">
-        <h1 className="text-white text-2xl font-bold">Study Panel</h1>
+        <img src="logo256.png" className="w-6" />
+        <h1 className="text-white text-xl font-bold ml-2">Study Panel</h1>
       </header>
       <div className=" w-full lg:h-full flex lg:justify-between lg:flex-col lg:items-end">
-        <div className="w-full flex justify-center lg:flex-col lg:items-end gap-6">
+        <div className="w-full flex pb-5 items-center lg:justify-center lg:flex-col lg:items-end gap-16 lg:gap-6 justify-center">
           <NavButton content="Home" to="/" icon={<IoHomeOutline />} />
           <NavButton
             content="Technologies"
@@ -55,7 +56,7 @@ const NavBar = () => {
             icon={<IoBriefcaseOutline />}
           />
         </div>
-        <div className=" w-full flex items-center justify-between p-5">
+        <div className=" hidden lg:block w-full flex items-center justify-between p-5">
           <button onClick={handleLogin} className=" text-xl text-white">
             {!user.email ? <IoLogInOutline /> : <IoLogOutOutline />}
           </button>
