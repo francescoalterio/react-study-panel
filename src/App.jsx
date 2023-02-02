@@ -9,7 +9,7 @@ import Technologies from "./pages/Technologies";
 function App() {
   return (
     <UserProvider>
-      <div className="flex overflow-y-hidden flex-col lg:flex-row dark:bg-[#282C35]">
+      <div className="flex overflow-y-hidden flex-col lg:flex-row bg-[#282C35]">
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
