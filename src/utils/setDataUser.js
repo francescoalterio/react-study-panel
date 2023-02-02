@@ -2,8 +2,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const setDataUser = async (
-  email,
+  uid,
   data = { learning: [], dominated: [], created: [] }
 ) => {
-  await setDoc(doc(db, "users", email), data);
+  await setDoc(doc(db, "users", uid), data);
 };

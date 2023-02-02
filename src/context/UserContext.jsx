@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 export const UserContext = React.createContext({});
 
 export const initialState = {
-  email: "",
+  userData: undefined,
   learning: [],
   dominated: [],
   created: [],

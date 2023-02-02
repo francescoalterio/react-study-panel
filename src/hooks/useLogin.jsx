@@ -1,26 +1,46 @@
-import { getDocument } from "../utils/getDocument";
-import { loginFirebase } from "../utils/loginFirebase";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
-import { useContext } from "react";
+import { useEffect } from "react";
+
+import {
+  getAuth,
+  signInWithRedirect,
+  getRedirectResult,
+  GithubAuthProvider,
+} from "firebase/auth";
 
 export function useLogin() {
-  const navigate = useNavigate();
-  const [user, handleUser] = useContext(UserContext);
-  const loginHandler = async (e, email, password) => {
-    e.preventDefault();
-    const userData = await loginFirebase(email, password);
-    if (!userData.err) {
-      const data = await getDocument("users", userData.user.email);
-      handleUser({
-        email: userData.user.email,
-        learning: data.learning,
-        dominated: data.dominated,
-        created: data.created,
-      });
-      navigate("/");
-    }
+  const loginWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    const auth = getAuth();
+    signInWithRedirect(auth, provider);
   };
 
-  return { loginHandler };
+  useEffect(() => {
+    const auth = getAuth();
+    getRedirectResult(auth)
+      .then((result) => {
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        if (credential) {
+          // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+          const token = credential.accessToken;
+          // ...
+          console.log({ token });
+        }
+
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GithubAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }, []);
+
+  return { loginWithGithub };
 }

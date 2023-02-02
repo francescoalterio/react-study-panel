@@ -27,13 +27,13 @@ export function useTechnology() {
       ? userData[property].filter((item) => item.id !== technologyData.id)
       : [...userData[property], technologyData];
     const userDataCopy = { ...userData };
-    delete userDataCopy.email;
+    delete userDataCopy.userData;
     userDataCopy[property] = newPropertyData;
-    await setDataUser(userData.email, userDataCopy);
-    const data = await getDocument("users", userData.email);
+    await setDataUser(userData.userData.uid, userDataCopy);
+    const data = await getDocument("users", userData.userData.uid);
     console.log("DATA: ", data);
     handleUserData({
-      email: userData.email,
+      userData: userData.userData,
       learning: data.learning,
       dominated: data.dominated,
       created: data.created,
@@ -41,12 +41,12 @@ export function useTechnology() {
   };
 
   const learningHandler = (technologyData) => {
-    if (!userData.email) navigate("/login");
+    if (!userData.userData) navigate("/login");
     else setData("learning", technologyData);
   };
 
   const dominatedHandler = (technologyData) => {
-    if (!userData.email) navigate("/login");
+    if (!userData.userData) navigate("/login");
     else setData("dominated", technologyData);
   };
 

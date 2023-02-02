@@ -22,7 +22,7 @@ const NavBar = () => {
   const [user, handleUser] = useContext(UserContext);
 
   const handleLogin = () => {
-    if (!user.email) {
+    if (!user.userData.uid) {
       navigate("/login");
     } else {
       const auth = getAuth();
@@ -58,10 +58,7 @@ const NavBar = () => {
         </div>
         <div className=" hidden lg:block w-full flex items-center justify-between p-5">
           <button onClick={handleLogin} className=" text-xl text-white">
-            {!user.email ? <IoLogInOutline /> : <IoLogOutOutline />}
-          </button>
-          <button className=" text-white text-xl " onClick={handleTheme}>
-            {theme === "light" ? <IoMoonOutline /> : <IoSunnyOutline />}
+            {!user.userData ? <IoLogInOutline /> : <IoLogOutOutline />}
           </button>
         </div>
       </div>

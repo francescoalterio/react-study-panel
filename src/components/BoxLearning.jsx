@@ -16,14 +16,14 @@ const BoxLearning = () => {
     );
 
     const newDominatedArray = [...user.dominated, technologyData];
-    setDataUser(user.email, {
+    setDataUser(user.userData.uid, {
       learning: techEliminated,
       dominated: newDominatedArray,
       created: user.created,
     });
-    getDocument("users", user.email).then((data) => {
+    getDocument("users", user.userData.uid).then((data) => {
       handleUser({
-        email: user.email,
+        userData: user.userData,
         learning: data.learning,
         dominated: data.dominated,
         created: data.created,
@@ -60,7 +60,7 @@ const BoxLearning = () => {
               }}
             />
           ))
-        ) : !user.email ? (
+        ) : !user.userData ? (
           <div className="w-full flex flex-col justify-center items-center pb-5">
             <h3 className=" text-2xl text-center font-bold mb-5 text-white">
               You need to log in to use the panel
