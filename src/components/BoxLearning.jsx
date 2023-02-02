@@ -65,12 +65,6 @@ const BoxLearning = () => {
             <h3 className=" text-2xl text-center font-bold mb-5 text-white">
               You need to log in to use the panel
             </h3>
-            <Link
-              to="/login"
-              className="btn-primary flex justify-center items-center text-lg"
-            >
-              Login
-            </Link>
           </div>
         ) : (
           <h3 className=" text-2xl text-center font-bold mb-5 text-white">

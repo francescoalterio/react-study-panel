@@ -1,17 +1,31 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import {
   getAuth,
   signInWithRedirect,
   getRedirectResult,
   GithubAuthProvider,
+  signOut,
 } from "firebase/auth";
+import { initialState, UserContext } from "../context/UserContext";
 
 export function useLogin() {
+  const [user, handleUser] = useContext(UserContext);
   const loginWithGithub = () => {
     const provider = new GithubAuthProvider();
     const auth = getAuth();
     signInWithRedirect(auth, provider);
+  };
+
+  const logout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        handleUser(initialState);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -42,5 +56,5 @@ export function useLogin() {
       });
   }, []);
 
-  return { loginWithGithub };
+  return { loginWithGithub, logout };
 }

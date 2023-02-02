@@ -4,8 +4,6 @@ import UserProvider from "./context/UserContext";
 import AddTechnology from "./pages/AddTechnology";
 import Dominated from "./pages/Dominated";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Technologies from "./pages/Technologies";
 
 function App() {
@@ -18,8 +16,6 @@ function App() {
           <Route path="/technologies" element={<Technologies />} />
           <Route path="/dominated" element={<Dominated />} />
           <Route path="/technologies/add" element={<AddTechnology />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </UserProvider>

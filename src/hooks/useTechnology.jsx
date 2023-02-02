@@ -41,12 +41,12 @@ export function useTechnology() {
   };
 
   const learningHandler = (technologyData) => {
-    if (!userData.userData) navigate("/login");
+    if (!userData.userData) navigate("/");
     else setData("learning", technologyData);
   };
 
   const dominatedHandler = (technologyData) => {
-    if (!userData.userData) navigate("/login");
+    if (!userData.userData) navigate("/");
     else setData("dominated", technologyData);
   };
 

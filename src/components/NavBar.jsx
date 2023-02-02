@@ -8,34 +8,10 @@ import { getAuth, signOut } from "firebase/auth";
 import {
   IoBriefcaseOutline,
   IoHomeOutline,
-  IoLogInOutline,
   IoLogoReact,
-  IoLogOutOutline,
-  IoMoonOutline,
-  IoSunnyOutline,
 } from "react-icons/io5";
 
 const NavBar = () => {
-  const [theme, handleTheme] = useTheme();
-  const navigate = useNavigate();
-
-  const [user, handleUser] = useContext(UserContext);
-
-  const handleLogin = () => {
-    if (!user.userData.uid) {
-      navigate("/login");
-    } else {
-      const auth = getAuth();
-      signOut(auth)
-        .then(() => {
-          handleUser(initialState);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
-
   return (
     <nav className=" lg:w-60 bg-[#111317] lg:h-screen flex lg:flex-col w-full h-16 fixed bottom-0 lg:relative ">
       <header className="w-full h-28 lg:flex justify-center items-center mb-5 hidden">
@@ -55,11 +31,6 @@ const NavBar = () => {
             to="/dominated"
             icon={<IoBriefcaseOutline />}
           />
-        </div>
-        <div className=" hidden lg:block w-full flex items-center justify-between p-5">
-          <button onClick={handleLogin} className=" text-xl text-white">
-            {!user.userData ? <IoLogInOutline /> : <IoLogOutOutline />}
-          </button>
         </div>
       </div>
     </nav>
